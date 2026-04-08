@@ -1,0 +1,90 @@
+﻿Analyzing fintrack...                                           
+
+   info - Constructors for public widgets should have a named 'key' parameter - figma_raw.dart:3:7 - use_key_in_widget_constructors
+  error - The getter 'w590' isn't defined for the type 'FontWeight' - figma_raw.dart:50:58 - undefined_getter
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:68:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:150:32 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:159:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:268:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:309:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:376:24 - sized_box_for_whitespace
+   info - 'translate' is deprecated and shouldn't be used. Use translateByVector3, translateByVector4, or translateByDouble instead - figma_raw.dart:385:58 - deprecated_member_use
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:444:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:495:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:502:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:509:29 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:525:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - figma_raw.dart:533:24 - sized_box_for_whitespace
+warning - Unused import: '../theme/app_theme.dart' - lib\screens\dashboard.dart:2:8 - unused_import
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:84:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:163:32 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:172:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:281:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:322:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:383:24 - sized_box_for_whitespace
+   info - 'translate' is deprecated and shouldn't be used. Use translateByVector3, translateByVector4, or translateByDouble instead - lib\screens\dashboard.dart:392:58 - deprecated_member_use
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:448:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:493:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:500:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:511:39 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:528:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:536:24 - sized_box_for_whitespace
+   info - The 'child' argument should be last in widget constructor invocations - lib\screens\dashboard.dart:986:17 - sort_child_properties_last
+  error - Too many positional arguments: 0 expected, but 1 found - lib\screens\dashboard.dart:996:19 - extra_positional_arguments_could_be_named
+  error - The named parameter 'style' isn't defined - lib\screens\dashboard.dart:997:19 - undefined_named_parameter
+  error - Expected to find ']' - lib\screens\dashboard.dart:1004:15 - expected_token
+  error - Too many positional arguments: 0 expected, but 7 found - lib\screens\dashboard.dart:1005:15 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\screens\dashboard.dart:1192:13 - expected_token
+  error - Expected an identifier - lib\screens\dashboard.dart:1195:7 - missing_identifier
+  error - Expected to find ')' - lib\screens\dashboard.dart:1195:7 - expected_token
+  error - Expected to find ';' - lib\screens\dashboard.dart:1198:9 - expected_token
+warning - Dead code - lib\screens\dashboard.dart:1198:10 - dead_code
+  error - Expected an identifier - lib\screens\dashboard.dart:1198:10 - missing_identifier
+  error - Expected to find ';' - lib\screens\dashboard.dart:1198:10 - expected_token
+  error - Unexpected text ';' - lib\screens\dashboard.dart:1198:10 - unexpected_token
+  error - Expected an identifier - lib\screens\dashboard.dart:1199:7 - missing_identifier
+  error - Expected to find ';' - lib\screens\dashboard.dart:1199:7 - expected_token
+  error - Unexpected text ';' - lib\screens\dashboard.dart:1199:7 - unexpected_token
+  error - Expected an identifier - lib\screens\dashboard.dart:1199:8 - missing_identifier
+  error - Expected to find ';' - lib\screens\dashboard.dart:1199:8 - expected_token
+  error - Unexpected text ';' - lib\screens\dashboard.dart:1199:8 - unexpected_token
+  error - Expected an identifier - lib\screens\dashboard.dart:1200:5 - missing_identifier
+  error - Unexpected text ';' - lib\screens\dashboard.dart:1200:5 - unexpected_token
+   info - Unnecessary empty statement - lib\screens\dashboard.dart:1200:6 - empty_statements
+warning - The value of the local variable 'size' isn't used - lib\screens\financial_awareness.dart:11:11 - unused_local_variable
+  error - Invalid constant value - lib\screens\financial_awareness.dart:27:30 - invalid_constant
+  error - The values in a const list literal must be constants - lib\screens\financial_awareness.dart:27:30 - non_constant_list_element
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\financial_awareness.dart:27:40 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\financial_awareness.dart:34:40 - undefined_getter
+  error - The getter 'textBody' isn't defined for the type 'AppColors' - lib\screens\financial_awareness.dart:68:40 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\financial_awareness.dart:123:49 - undefined_getter
+  error - The getter 'textDark' isn't defined for the type 'AppColors' - lib\screens\financial_awareness.dart:128:36 - undefined_getter
+  error - Invalid constant value - lib\screens\login_screen.dart:67:28 - invalid_constant
+  error - The getter 'textLight' isn't defined for the type 'AppColors' - lib\screens\login_screen.dart:67:38 - undefined_getter
+  error - Invalid constant value - lib\screens\login_screen.dart:89:28 - invalid_constant
+  error - The getter 'textLight' isn't defined for the type 'AppColors' - lib\screens\login_screen.dart:89:38 - undefined_getter
+  error - The getter 'textLight' isn't defined for the type 'AppColors' - lib\screens\login_screen.dart:96:40 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\login_screen.dart:116:44 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\login_screen.dart:152:46 - undefined_getter
+  error - The getter 'textDark' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:42:30 - undefined_getter
+  error - The getter 'textLight' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:83:34 - undefined_getter
+  error - The getter 'textDark' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:122:26 - undefined_getter
+  error - The getter 'cardBg' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:139:26 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:155:32 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:158:48 - undefined_getter
+  error - The getter 'textDark' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:170:38 - undefined_getter
+  error - The getter 'textLight' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:178:38 - undefined_getter
+  error - The getter 'cardBg' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:202:26 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:217:32 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:225:34 - undefined_getter
+  error - The getter 'primaryBlue' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:252:38 - undefined_getter
+  error - The getter 'expenseRed' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:334:46 - undefined_getter
+  error - The getter 'incomeGreen' isn't defined for the type 'AppColors' - lib\screens\notification_settings.dart:334:69 - undefined_getter
+  error - Invalid constant value - lib\theme\app_theme.dart:83:20 - invalid_constant
+  error - The getter 'white' isn't defined for the type 'AppColors' - lib\theme\app_theme.dart:83:30 - undefined_getter
+  error - Invalid constant value - lib\theme\app_theme.dart:84:22 - invalid_constant
+  error - The getter 'white' isn't defined for the type 'AppColors' - lib\theme\app_theme.dart:84:32 - undefined_getter
+  error - Invalid constant value - lib\theme\app_theme.dart:86:18 - invalid_constant
+  error - The getter 'white' isn't defined for the type 'AppColors' - lib\theme\app_theme.dart:86:28 - undefined_getter
+  error - The getter 'white' isn't defined for the type 'AppColors' - lib\theme\app_theme.dart:98:38 - undefined_getter
+

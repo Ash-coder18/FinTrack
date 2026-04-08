@@ -1,0 +1,19 @@
+﻿Analyzing dashboard.dart...                                     
+
+warning - Unused import: '../theme/app_theme.dart' - lib\screens\dashboard.dart:2:8 - unused_import
+  error - The getter 'w590' isn't defined for the type 'FontWeight' - lib\screens\dashboard.dart:66:58 - undefined_getter
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:84:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:163:32 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:172:31 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:281:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:322:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:383:24 - sized_box_for_whitespace
+   info - 'translate' is deprecated and shouldn't be used. Use translateByVector3, translateByVector4, or translateByDouble instead - lib\screens\dashboard.dart:392:58 - deprecated_member_use
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:448:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:493:24 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:500:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:511:39 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:528:23 - sized_box_for_whitespace
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:536:24 - sized_box_for_whitespace
+  error - Expected to find ')' - lib\screens\dashboard.dart:1001:6 - expected_token
+

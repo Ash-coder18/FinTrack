@@ -1,0 +1,9 @@
+﻿Analyzing dashboard.dart...                                     
+
+  error - The named parameter 'onHeightChanged' isn't defined - lib\screens\dashboard.dart:45:9 - undefined_named_parameter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard.dart:111:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard.dart:209:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard.dart:304:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard.dart:317:48 - deprecated_member_use
+   info - Use a 'SizedBox' to add whitespace to a layout - lib\screens\dashboard.dart:414:14 - sized_box_for_whitespace
+
