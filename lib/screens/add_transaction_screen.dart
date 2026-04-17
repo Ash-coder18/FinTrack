@@ -386,7 +386,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     try {
       final model = GenerativeModel(
         model: 'gemini-2.5-flash',
-        apiKey: 'AIzaSyCpzTR8votJY0ug5SZ-1mXyqJcspguo6Hg'
+        apiKey: 'AIzaSyA8lxEscYsvGVP6esFjoLU5y0xEJh2QB8M'
       );
 
       final prompt = "Analyze this receipt or transaction screenshot. Extract the total amount. Categorize it STRICTLY into one of these exact strings: 'Food', 'Shopping', 'OTT', 'Travels', 'Others'. Create a short 2-3 word note describing the purchase. If the transaction method isn't clear from the receipt, default the \"method\" to \"CASH\". Otherwise select from ['UPI', 'CASH', 'Card', 'Net Banking']. Return the result EXACTLY as a raw JSON object with no markdown formatting, like this: {\"amount\": \"150.00\", \"category\": \"Food\", \"notes\": \"Zomato delivery\", \"method\": \"UPI\"}.";

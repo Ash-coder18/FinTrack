@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +41,9 @@ class DashboardScreenState extends State<DashboardScreen> {
     _loadUserAvatar();
 
     // Listen for auth metadata changes (e.g. avatar updated in Profile tab)
-    _authSubscription =
-        Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+    _authSubscription = Supabase.instance.client.auth.onAuthStateChange.listen((
+      data,
+    ) {
       _loadUserAvatar();
     });
 
@@ -77,72 +79,73 @@ class DashboardScreenState extends State<DashboardScreen> {
     final lang = Provider.of<SettingsProvider>(context).languageLabel;
     final t = AppTranslations.of(lang);
     final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    
+
     return AdaptiveAnimatedBackground(
       child: Scaffold(
         extendBody: true,
         backgroundColor: Colors.transparent,
         body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0).copyWith(bottom: 12),
-              child: _buildHeader(),
-            ),
-            Expanded(
-              child: IndexedStack(
-                index: _selectedIndex,
-                children: _pages,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 24.0,
+                ).copyWith(bottom: 12),
+                child: _buildHeader(),
               ),
-            ),
-          ],
+              Expanded(
+                child: IndexedStack(index: _selectedIndex, children: _pages),
+              ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: isKeyboardOpen ? null : FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: AppColors.primary,
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  const AddTransactionScreen(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(0.0, 1.0);
-                const end = Offset.zero;
-                const curve = Curves.easeOutCubic;
+        floatingActionButton: isKeyboardOpen
+            ? null
+            : FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: AppColors.primary,
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const AddTransactionScreen(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0);
+                            const end = Offset.zero;
+                            const curve = Curves.easeOutCubic;
 
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
-                var offsetAnimation = animation.drive(tween);
+                            var tween = Tween(
+                              begin: begin,
+                              end: end,
+                            ).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
 
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              },
-            ),
-          );
-          _homeKey.currentState?.refreshData();
-        },
-        child: const Icon(Icons.add, color: AppColors.white, size: 32),
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                    ),
+                  );
+                  _homeKey.currentState?.refreshData();
+                },
+                child: const Icon(Icons.add, color: AppColors.white, size: 32),
+              ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        endDrawer: const CustomDrawer(),
+        bottomNavigationBar: _buildBottomNavigationBar(t),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      endDrawer: const CustomDrawer(),
-      bottomNavigationBar: _buildBottomNavigationBar(t),
-    ));
+    );
   }
 
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            const ThemeAwareLogo(height: 38),
-          ],
-        ),
+        Row(children: [const ThemeAwareLogo(height: 38)]),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -181,7 +184,9 @@ class DashboardScreenState extends State<DashboardScreen> {
   Widget _buildBottomNavigationBar(Map<String, String> t) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1)),
+        border: Border(
+          top: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
+        ),
       ),
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -192,26 +197,33 @@ class DashboardScreenState extends State<DashboardScreen> {
         elevation: 0.0,
         clipBehavior: Clip.antiAlias,
         child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildNavItem(Icons.home, t['home']!, 0),
-            _buildNavItem(Icons.swap_horiz, t['transaction']!, 1),
-            const SizedBox(width: 48), // Space for FAB
-            _buildNavItem(Icons.chat_bubble_outline, t['ai_chat']!, 2),
-            _buildProfileNavItem(),
-          ],
+          height: 60,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildNavItem(Icons.home, t['home']!, 0),
+              _buildNavItem(Icons.swap_horiz, t['transaction']!, 1),
+              const SizedBox(width: 48), // Space for FAB
+              _buildNavItem(Icons.chat_bubble_outline, t['ai_chat']!, 2),
+              _buildProfileNavItem(),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index, {bool isIconOnly = false}) {
+  Widget _buildNavItem(
+    IconData icon,
+    String label,
+    int index, {
+    bool isIconOnly = false,
+  }) {
     final bool isSelected = _selectedIndex == index;
-    final Color color = isSelected ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurfaceVariant;
+    final Color color = isSelected
+        ? Theme.of(context).colorScheme.onSurface
+        : Theme.of(context).colorScheme.onSurfaceVariant;
 
     return InkWell(
       onTap: () {
@@ -268,7 +280,9 @@ class DashboardScreenState extends State<DashboardScreen> {
                   )
                 : Icon(
                     Icons.person_outline,
-                    color: isSelected ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: isSelected
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                     size: 30,
                   ),
           ],
@@ -285,23 +299,46 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => HomeViewState();
 }
 
-class HomeViewState extends State<HomeView> {
+class HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   late Future<List<dynamic>> _dashboardDataFuture;
   int _touchedIndex = -1;
+  late AnimationController _chartAnimController;
+  late Animation<double> _chartAnimation;
 
   @override
   void initState() {
     super.initState();
+    _chartAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+    _chartAnimation = CurvedAnimation(
+      parent: _chartAnimController,
+      curve: Curves.easeInOutCubic,
+    );
     refreshData();
   }
 
+  @override
+  void dispose() {
+    _chartAnimController.dispose();
+    super.dispose();
+  }
+
   void refreshData() {
+    _chartAnimController.reset();
     setState(() {
       _dashboardDataFuture = Supabase.instance.client
           .from('transactions')
           .select()
           .eq('user_id', Supabase.instance.client.auth.currentUser!.id)
-          .order('created_at', ascending: false);
+          .order('created_at', ascending: false)
+          .then((data) {
+            if (mounted) {
+              _chartAnimController.forward();
+            }
+            return data;
+          });
     });
   }
 
@@ -323,8 +360,13 @@ class HomeViewState extends State<HomeView> {
 
         if (snapshot.hasError) {
           return Center(
-            child: Text('${t['error_prefix']!}${snapshot.error}',
-                style: const TextStyle(color: AppColors.error, fontFamily: 'Inter')),
+            child: Text(
+              '${t['error_prefix']!}${snapshot.error}',
+              style: const TextStyle(
+                color: AppColors.error,
+                fontFamily: 'Inter',
+              ),
+            ),
           );
         }
 
@@ -340,7 +382,8 @@ class HomeViewState extends State<HomeView> {
           } else if (tx['type'] == 'Expense') {
             totalExpense += amt;
             final category = tx['category'] as String? ?? t['others']!;
-            expenseByCategory[category] = (expenseByCategory[category] ?? 0.0) + amt;
+            expenseByCategory[category] =
+                (expenseByCategory[category] ?? 0.0) + amt;
           }
         }
 
@@ -362,7 +405,9 @@ class HomeViewState extends State<HomeView> {
           top5Expenses.add(MapEntry(t['others']!, othersAmount));
         }
 
-        String topCategoryName = top5Expenses.isNotEmpty ? top5Expenses.first.key : t['no_expenses']!;
+        String topCategoryName = top5Expenses.isNotEmpty
+            ? top5Expenses.first.key
+            : t['no_expenses']!;
 
         double availableBalance = totalIncome - totalExpense;
         List<dynamic> recentTransactions = allTransactions.take(4).toList();
@@ -373,7 +418,12 @@ class HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildBalanceCard(availableBalance, totalIncome, totalExpense, t),
+                _buildBalanceCard(
+                  availableBalance,
+                  totalIncome,
+                  totalExpense,
+                  t,
+                ),
                 const SizedBox(height: 30),
                 _buildChartSection(top5Expenses, topCategoryName, t),
                 const SizedBox(height: 30),
@@ -387,17 +437,22 @@ class HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildBalanceCard(double availableBalance, double totalIncome, double totalExpense, Map<String, String> t) {
+  Widget _buildBalanceCard(
+    double availableBalance,
+    double totalIncome,
+    double totalExpense,
+    Map<String, String> t,
+  ) {
     final currencyFormat = NumberFormat.currency(locale: 'en_IN', symbol: '₹ ');
 
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFF0A40A0), // Rich primary blue
+        color: const Color(0xFF2563EB), // Royal Blue
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0A40A0).withValues(alpha: 0.3),
+            color: const Color(0xFF2563EB).withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -456,9 +511,23 @@ class HomeViewState extends State<HomeView> {
                   const SizedBox(height: 24),
                   Row(
                     children: [
-                      Expanded(child: _buildIncomeExpenseCard(t['expense']!, currencyFormat.format(totalExpense), Colors.redAccent, Icons.arrow_downward)),
+                      Expanded(
+                        child: _buildIncomeExpenseCard(
+                          t['expense']!,
+                          currencyFormat.format(totalExpense),
+                          AppColors.chartRose,
+                          Icons.arrow_downward,
+                        ),
+                      ),
                       const SizedBox(width: 16),
-                      Expanded(child: _buildIncomeExpenseCard(t['income']!, currencyFormat.format(totalIncome), Colors.greenAccent, Icons.arrow_upward)),
+                      Expanded(
+                        child: _buildIncomeExpenseCard(
+                          t['income']!,
+                          currencyFormat.format(totalIncome),
+                          AppColors.chartGreen,
+                          Icons.arrow_upward,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -471,7 +540,12 @@ class HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildIncomeExpenseCard(String title, String amount, Color contentColor, IconData icon) {
+  Widget _buildIncomeExpenseCard(
+    String title,
+    String amount,
+    Color contentColor,
+    IconData icon,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -487,8 +561,8 @@ class HomeViewState extends State<HomeView> {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: contentColor,
+                  style: const TextStyle(
+                    color: AppColors.white,
                     fontSize: 13,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
@@ -525,55 +599,46 @@ class HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildChartSection(List<MapEntry<String, double>> chartData, String topCategoryName, Map<String, String> t) {
+  Widget _buildChartSection(
+    List<MapEntry<String, double>> chartData,
+    String topCategoryName,
+    Map<String, String> t,
+  ) {
     Color getCategoryColor(String category, int index) {
-      final catLower = category.toLowerCase();
-      if (catLower == 'shopping') return const Color(0xFF0A40A0); // FinTrack primary blue
-      if (catLower == 'food') return Colors.redAccent;
-
-      final List<Color> fallbackColors = [
-        AppColors.warning,
-        AppColors.secondaryLight,
-        Colors.teal,
-        Colors.orangeAccent,
+      // VIBGYOR Sequence
+      final List<Color> chartColors = [
+        AppColors.chartViolet, // V
+        AppColors.chartIndigo, // I
+        AppColors.chartBlue, // B
+        AppColors.chartGreen, // G
+        AppColors.chartYellow, // Y
+        AppColors.chartOrange, // O
+        AppColors.chartRed, // R
       ];
-      return fallbackColors[index % fallbackColors.length];
+      return chartColors[index % chartColors.length];
     }
 
-    List<PieChartSectionData> pieSections = [];
     List<Widget> legendItems = [];
+    double totalValue = 0.0;
 
-    for (int i = 0; i < chartData.length; i++) {
-      final color = getCategoryColor(chartData[i].key, i);
-      final isTouched = i == _touchedIndex;
-      final radius = isTouched ? 28.0 : 20.0;
-      pieSections.add(
-        PieChartSectionData(
-          color: color,
-          value: chartData[i].value,
-          title: '', // don't show title inside slices for cleaner look
-          radius: radius,
-        ),
-      );
+    if (chartData.isEmpty) {
+      totalValue = 1.0;
       legendItems.add(
-        Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
-          child: _buildLegendItem(chartData[i].key, color),
-        ),
+        _buildLegendItem(t['no_expenses']!, AppColors.greyMedium),
       );
-    }
-
-    // fallback empty slice if no expenses
-    if (pieSections.isEmpty) {
-      pieSections.add(
-        PieChartSectionData(
-          color: AppColors.greyMedium,
-          value: 1,
-          title: '',
-          radius: 20,
-        ),
-      );
-      legendItems.add(_buildLegendItem(t['no_expenses']!, AppColors.greyMedium));
+    } else {
+      for (int i = 0; i < chartData.length; i++) {
+        totalValue += chartData[i].value;
+        legendItems.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: _buildLegendItem(
+              chartData[i].key,
+              getCategoryColor(chartData[i].key, i),
+            ),
+          ),
+        );
+      }
     }
 
     return Container(
@@ -599,58 +664,150 @@ class HomeViewState extends State<HomeView> {
           SizedBox(
             width: 140,
             height: 140,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                PieChart(
-                  PieChartData(
-                    pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                        setState(() {
-                          if (!event.isInterestedForInteractions ||
-                              pieTouchResponse == null ||
-                              pieTouchResponse.touchedSection == null) {
-                            _touchedIndex = -1;
-                            return;
-                          }
-                          _touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                        });
-                      },
-                    ),
-                    sectionsSpace: 4,
-                    centerSpaceRadius: 40,
-                    sections: pieSections,
-                    borderData: FlBorderData(show: false),
-                  ),
-                ),
-                Builder(builder: (context) {
-                  if (_touchedIndex >= 0 && _touchedIndex < chartData.length) {
-                    final double total = chartData.fold(0.0, (sum, item) => sum + item.value);
-                    final double val = chartData[_touchedIndex].value;
-                    final double percentage = total > 0 ? (val / total * 100) : 0;
-                    return Text(
-                      '${percentage.toStringAsFixed(1)}%',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: getCategoryColor(chartData[_touchedIndex].key, _touchedIndex),
-                        fontFamily: 'Inter',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    );
-                  }
-                  return Text(
-                    t['expense']!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+            child: AnimatedBuilder(
+              animation: _chartAnimation,
+              builder: (context, child) {
+                List<PieChartSectionData> pieSections = [];
+                final double animV = _chartAnimation.value;
+                final double currentSweepTotal = totalValue * animV;
+                double accumulated = 0.0;
+
+                if (chartData.isEmpty) {
+                  pieSections.add(
+                    PieChartSectionData(
+                      color: AppColors.greyMedium,
+                      value: currentSweepTotal > 0 ? currentSweepTotal : 0.0001,
+                      title: '',
+                      radius: 20.0,
                     ),
                   );
-                }),
-              ],
+                } else {
+                  for (int i = 0; i < chartData.length; i++) {
+                    final targetVal = chartData[i].value;
+                    final color = getCategoryColor(chartData[i].key, i);
+                    final isTouched = i == _touchedIndex;
+                    final radius = isTouched ? 28.0 : 20.0;
+
+                    double visibleVal = 0.0;
+                    if (currentSweepTotal > accumulated) {
+                      visibleVal = math.min(
+                        currentSweepTotal - accumulated,
+                        targetVal,
+                      );
+                    }
+
+                    if (visibleVal > 0) {
+                      pieSections.add(
+                        PieChartSectionData(
+                          color: color,
+                          value: visibleVal,
+                          title: '',
+                          radius: radius,
+                        ),
+                      );
+                    }
+                    accumulated += targetVal;
+                  }
+                }
+
+                final double remaining = totalValue - currentSweepTotal;
+                if (remaining > 0) {
+                  pieSections.add(
+                    PieChartSectionData(
+                      color: Colors.transparent,
+                      value: remaining,
+                      title: '',
+                      radius: 20.0,
+                    ),
+                  );
+                }
+
+                if (pieSections.isEmpty) {
+                  pieSections.add(
+                    PieChartSectionData(
+                      color: Colors.transparent,
+                      value: 1.0,
+                      title: '',
+                      radius: 20.0,
+                    ),
+                  );
+                }
+
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    PieChart(
+                      PieChartData(
+                        startDegreeOffset: -90,
+                        pieTouchData: PieTouchData(
+                          touchCallback:
+                              (FlTouchEvent event, pieTouchResponse) {
+                                setState(() {
+                                  if (!event.isInterestedForInteractions ||
+                                      pieTouchResponse == null ||
+                                      pieTouchResponse.touchedSection == null) {
+                                    _touchedIndex = -1;
+                                    return;
+                                  }
+                                  final touchIdx = pieTouchResponse
+                                      .touchedSection!
+                                      .touchedSectionIndex;
+                                  if (chartData.isNotEmpty &&
+                                      touchIdx < chartData.length) {
+                                    _touchedIndex = touchIdx;
+                                  } else {
+                                    _touchedIndex = -1;
+                                  }
+                                });
+                              },
+                        ),
+                        sectionsSpace: 4,
+                        centerSpaceRadius: 40,
+                        sections: pieSections,
+                        borderData: FlBorderData(show: false),
+                      ),
+                    ),
+                    Builder(
+                      builder: (context) {
+                        if (_touchedIndex >= 0 &&
+                            _touchedIndex < chartData.length) {
+                          final double total = chartData.fold(
+                            0.0,
+                            (sum, item) => sum + item.value,
+                          );
+                          final double val = chartData[_touchedIndex].value;
+                          final double percentage = total > 0
+                              ? (val / total * 100)
+                              : 0;
+                          return Text(
+                            '${percentage.toStringAsFixed(1)}%',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: getCategoryColor(
+                                chartData[_touchedIndex].key,
+                                _touchedIndex,
+                              ),
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          );
+                        }
+                        return Text(
+                          t['expense']!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
           ),
           const SizedBox(width: 30),
@@ -659,9 +816,11 @@ class HomeViewState extends State<HomeView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: legendItems.isNotEmpty ? legendItems : const [SizedBox()],
+              children: legendItems.isNotEmpty
+                  ? legendItems
+                  : const [SizedBox()],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -673,10 +832,7 @@ class HomeViewState extends State<HomeView> {
         Container(
           width: 10,
           height: 10,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 8),
         Text(
@@ -693,7 +849,10 @@ class HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildRecentTransactions(List<dynamic> transactions, Map<String, String> t) {
+  Widget _buildRecentTransactions(
+    List<dynamic> transactions,
+    Map<String, String> t,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -729,29 +888,41 @@ class HomeViewState extends State<HomeView> {
                         child: Text(
                           t['no_recent_txn']!,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                             fontFamily: 'Inter',
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ]
                 : transactions.map((tx) {
                     final isIncome = tx['type'] == 'Income';
-                    final color = isIncome ? AppColors.success : AppColors.error;
-                    final title = tx['category'] as String? ?? (isIncome ? t['income']! : '—');
+                    final color = isIncome
+                        ? AppColors.success
+                        : AppColors.error;
+                    final title =
+                        tx['category'] as String? ??
+                        (isIncome ? t['income']! : '—');
                     final amountVal = (tx['amount'] as num?)?.toDouble() ?? 0.0;
                     final amountText = isIncome
                         ? '+₹ ${amountVal.toStringAsFixed(2)}'
                         : '-₹ ${amountVal.toStringAsFixed(2)}';
-                    final methodText = tx['method'] as String? ?? (isIncome ? 'Direct' : '—');
+                    final methodText =
+                        tx['method'] as String? ?? (isIncome ? 'Direct' : '—');
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHighest,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -770,7 +941,9 @@ class HomeViewState extends State<HomeView> {
                               child: Text(
                                 title,
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                   fontSize: 14,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w500,
@@ -786,7 +959,9 @@ class HomeViewState extends State<HomeView> {
                                   amountText,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                     fontSize: 14,
                                     fontFamily: 'Inter',
                                     fontWeight: FontWeight.w600,
@@ -799,7 +974,9 @@ class HomeViewState extends State<HomeView> {
                                 methodText,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
                                   fontSize: 13,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w500,

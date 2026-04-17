@@ -32,7 +32,7 @@ class _AdaptiveAnimatedBackgroundState extends State<AdaptiveAnimatedBackground>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF161618) : const Color(0xFFF9F9FB);
+    final backgroundColor = isDark ? const Color(0xFF161618) : const Color(0xFFF8FAFC);
 
     return Container(
       color: backgroundColor,

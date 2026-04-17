@@ -78,7 +78,7 @@ class _AiChatViewState extends State<AiChatView> {
     try {
       final contextData = await _getFinancialContext();
       final systemPrompt = 'You are the FinTrack AI, a friendly, human-like financial assistant. You are chatting with $_userName, whose profession is $_userProfession. Talk normally like a real person—be conversational, empathetic, and casual. Tailor your financial advice to their profession. Keep responses concise for a mobile chat interface.';
-      final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: 'AIzaSyCpzTR8votJY0ug5SZ-1mXyqJcspguo6Hg', systemInstruction: Content.system(systemPrompt));
+      final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: 'AIzaSyA8lxEscYsvGVP6esFjoLU5y0xEJh2QB8M', systemInstruction: Content.system(systemPrompt));
       final prompt = "Here is my transaction data:\n$contextData\n\nMy question is: $text";
       final response = await model.generateContent([Content.text(prompt)]);
       setState(() { messages.add(ChatMessage(text: response.text?.trim() ?? "I failed to process that request.", isUser: false, timestamp: DateTime.now())); });
